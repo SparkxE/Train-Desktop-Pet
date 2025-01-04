@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class ScreenEndTrigger : Subject
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        Debug.Log("Trigger entered!");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (other.CompareTag("Respawn"))
+        {
+            Debug.Log("End point reached!");
+            NotifyObservers();
+        }
     }
 }

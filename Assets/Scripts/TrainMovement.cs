@@ -10,9 +10,9 @@ public class TrainMovement : MonoBehaviour, IObserver
     [SerializeField] private float stationStartTime;
 
     //vars for indicating when to reset at end of screen
-    [SerializeField] private Collider screenMark;
+    // [SerializeField] private Collider screenMark;
     [SerializeField] private Transform screenStart;
-    [SerializeField] private Collider screenEnd;
+    [SerializeField] private Subject screenEnd;
 
     //movement and braking speed vars
     [SerializeField] private float moveSpeed;
@@ -27,29 +27,39 @@ public class TrainMovement : MonoBehaviour, IObserver
 
     }
 
+    private void OnEnable()
+    {
+        screenEnd.AddObserver(this);
+    }
+
+    private void OnDisable()
+    {
+        screenEnd.RemoveObserver(this);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(stationStop.position.x <= stationMark.position.x && stationStop.position.x >= stationMark.position.x - brakeDistance){
+        if (stationStop.position.x <= stationMark.position.x && stationStop.position.x >= stationMark.position.x - brakeDistance)
+        {
             gameObject.GetComponent<Rigidbody>().drag = gameObject.GetComponent<Rigidbody>().drag + brakeSpeed;
             Invoke("StartFromStop", stationStartTime);
         }
-
-        // if(){
-        //     gameObject.transform.position = screenStart.position;
-        // }
-        else{
+        else
+        {
             gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * moveSpeed);
         }
     }
 
-    private void StartFromStop(){
-        gameObject.GetComponent<Rigidbody>().drag = dragDefault; 
+    private void StartFromStop()
+    {
+        gameObject.GetComponent<Rigidbody>().drag = dragDefault;
         gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * moveSpeed);
     }
 
-    public void OnNotify(){
-
+    public void OnNotify()
+    {
+        gameObject.transform.position = new Vector3(screenStart.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
     }
 
     // void OnGUI()     //only for debugging values
