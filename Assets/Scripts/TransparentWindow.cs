@@ -20,6 +20,8 @@ public class TransparentWindow : MonoBehaviour
     [DllImport("user32.dll", SetLastError = true)]
     static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint uFlags);
 
+    [DllImport("user32.dll")]
+    static extern int SetLayeredWindowAttributes(IntPtr hWnd, uint crKey, byte bAlpha, uint dwFlags);
 
     //
     private struct MARGINS
@@ -42,6 +44,9 @@ public class TransparentWindow : MonoBehaviour
     //const to keep window on top
     static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
 
+    //const to allow non-transparent parts of the window to be clickable
+    const uint LWA_COLORKEY = 0x00000001;
+
     private void Start()
     {
         #if !UNITY_EDITOR       //running this in the Unity Editor breaks the whole thing, so don't run unless it's a proper build
@@ -52,7 +57,8 @@ public class TransparentWindow : MonoBehaviour
             DwmExtendFrameIntoClientArea(hWnd, ref margins);
 
             //make the window click-through so the main desktop can still be used
-            SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT);
+            SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_LAYERED);
+            SetLayeredWindowAttributes(hWnd, 0, 0, LWA_COLORKEY);   //anything in the window with color = black and alpha = 0 -> click-through
 
             //pin the window to the top layer
             SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, 0);
