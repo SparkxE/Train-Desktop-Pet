@@ -674,7 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6837228186894811100, guid: e098e947660b79942b7cb7774f58555d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.24
+      value: 2.246
       objectReference: {fileID: 0}
     - target: {fileID: 6837228186894811100, guid: e098e947660b79942b7cb7774f58555d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -713,9 +713,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
+      propertyPath: maxSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
       propertyPath: screenEnd
       value: 
       objectReference: {fileID: 988245123}
+    - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
+      propertyPath: accelSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
+      propertyPath: brakeSpeed
+      value: 0.125
+      objectReference: {fileID: 0}
     - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
       propertyPath: screenMark
       value: 
@@ -730,11 +742,15 @@ PrefabInstance:
       objectReference: {fileID: 413310839}
     - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
       propertyPath: brakeDistance
-      value: 5
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
+      propertyPath: stationBuffer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8964733420187641226, guid: e098e947660b79942b7cb7774f58555d, type: 3}
       propertyPath: stationStartTime
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
