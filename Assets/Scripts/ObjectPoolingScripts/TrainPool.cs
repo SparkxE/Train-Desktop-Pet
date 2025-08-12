@@ -5,14 +5,10 @@ using UnityEngine.Pool;
 
 public class TrainPool : MonoBehaviour
 {
-    [SerializeField] private int maxPoolSize = 10;
-    [SerializeField] private int stackDefaultCapacity = 10;
+    [SerializeField] private int maxPoolSize = 1;
+    [SerializeField] private int stackDefaultCapacity = 1;
     [SerializeField] private GameObject[] trainPrefabs;
-    [SerializeField] private int trainMaxX;
-    [SerializeField] private int trainMinX;
-    [SerializeField] private int trainMaxZ;
-    [SerializeField] private int trainMinZ;
-    [SerializeField] private float trainDropHeight;
+    [SerializeField] private Vector3 spawnLocation;
 
     private IObjectPool<Train> _pool;
     public IObjectPool<Train> Pool
@@ -37,9 +33,14 @@ public class TrainPool : MonoBehaviour
     
     private Train CreatePooledItem()
     {
-        GameObject go = GameObject.Instantiate(trainPrefabs[Random.Range(0, trainPrefabs.Length)]);
-        Train train = go.AddComponent<Train>();
+        TrainSpawnerFactory spawner = GetComponent<TrainSpawnerFactory>();
+        Train train;
+        ISpawner spawnedTrain = spawner.GetSpawnItem(trainPrefabs[Random.Range(0, trainPrefabs.Length - 1)], spawnLocation);
+        GameObject trainObject = GameObject.Find(spawnedTrain.SpawnerName);
+        train = trainObject.AddComponent<Train>();
         train.Pool = Pool;
+        // Train train = spawner.GetSpawnItem();
+        // train.Pool = Pool;
 
         return train;
     }
@@ -59,10 +60,7 @@ public class TrainPool : MonoBehaviour
         Destroy(train.gameObject);
     }
 
-    public void SpawnTrains(){
-        for(int i = 0; i < stackDefaultCapacity; i++){
-            var train = Pool.Get();
-            train.transform.position = new Vector3(Random.Range(trainMinX, trainMaxX), trainDropHeight, Random.Range(trainMinZ, trainMaxZ));
-        }
+    public void SpawnTrain(){
+        var train = Pool.Get();
     }
 }

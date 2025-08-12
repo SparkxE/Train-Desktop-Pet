@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Factory : MonoBehaviour
 {
-    public abstract ISpawner GetSpawnItem();
+    public abstract ISpawner GetSpawnItem(GameObject trainPrefab, Vector3 position);
 
     public string GetLog(ISpawner spawner)
     {

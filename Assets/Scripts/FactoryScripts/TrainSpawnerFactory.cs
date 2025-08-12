@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainSpawnerFactory : MonoBehaviour
+public class TrainSpawnerFactory : Factory
 {
-    // Start is called before the first frame update
-    void Start()
+    public override ISpawner GetSpawnItem(GameObject trainPrefab, Vector3 position)
     {
-        
-    }
+        GameObject instance = Instantiate(trainPrefab, position, Quaternion.identity);
+        instance.name = trainPrefab.name;
+        TrainSpawner spawner = instance.AddComponent<TrainSpawner>();
+        spawner.Initialize();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Train train = instance.AddComponent<Train>();
+
+        Debug.Log(instance.name + " is being created");
+        return spawner;
     }
 }

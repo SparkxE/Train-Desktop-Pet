@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class TrainPooler : MonoBehaviour
 {
+    private TrainPool pool;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        pool = gameObject.GetComponent<TrainPool>();
+        pool.SpawnTrain();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

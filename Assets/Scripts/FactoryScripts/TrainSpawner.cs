@@ -5,7 +5,6 @@ using UnityEngine;
 public class TrainSpawner : MonoBehaviour, ISpawner
 {
     [SerializeField] private string spawnerName;
-    private GameObject trainModel;
 
     public string SpawnerName
     {
@@ -15,7 +14,7 @@ public class TrainSpawner : MonoBehaviour, ISpawner
 
     public void Initialize()
     {
-        trainModel.name = SpawnerName;
+        gameObject.name = SpawnerName;
     }
 
     
