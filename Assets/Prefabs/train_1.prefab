@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4797229315163779473}
+  - component: {fileID: 1508607398570601822}
   m_Layer: 0
   m_Name: screenMark
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,6 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6837228186894811100}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1508607398570601822
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175043071275733425}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6639432407944469863
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,11 +262,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d38abd0f11c6e744c9b6ba5ac409af1b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.24
+      value: 2.246
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d38abd0f11c6e744c9b6ba5ac409af1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.1959996
+      value: -4.54
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d38abd0f11c6e744c9b6ba5ac409af1b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -335,13 +357,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stationStop: {fileID: 1060592929769326377}
   stationMark: {fileID: 0}
-  stationStartTime: 10
-  screenMark: {fileID: 0}
+  stationStartTime: 15
+  stationBuffer: 1
   screenStart: {fileID: 0}
   screenEnd: {fileID: 0}
-  moveSpeed: 5
-  brakeSpeed: 2
-  brakeDistance: 40
+  accelSpeed: 5
+  brakeSpeed: 0.125
+  brakeDistance: 11
   dragDefault: 0
 --- !u!54 &3095612380008310102
 Rigidbody:

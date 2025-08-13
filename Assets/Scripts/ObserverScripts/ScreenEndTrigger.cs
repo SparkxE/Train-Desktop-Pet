@@ -8,8 +8,8 @@ public class ScreenEndTrigger : Subject
     {
         if (other.CompareTag("Respawn"))
         {
-            Debug.Log("Trigger entered!");
-            Debug.Log("End point reached!");
+            // Debug.Log("Trigger entered!");
+            // Debug.Log("End point reached!");
             NotifyObservers();
         }
     }

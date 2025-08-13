@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrainMovement : MonoBehaviour, IObserver
+public class TrainMovement : Subject, IObserver
 {
     //vars for indicating when to stop at the Station
     [SerializeField] private Transform stationStop;
@@ -13,8 +13,9 @@ public class TrainMovement : MonoBehaviour, IObserver
 
     //vars for indicating when to reset at end of screen
     // [SerializeField] private Collider screenMark;
-    [SerializeField] private Transform screenStart;
+    // [SerializeField] private Transform screenStart;
     [SerializeField] private Subject screenEnd;
+    [SerializeField] private IObserver spawner;
 
     //movement and braking speed vars
     private Rigidbody trainBody;
@@ -29,18 +30,37 @@ public class TrainMovement : MonoBehaviour, IObserver
     void Start()
     {
         trainBody = gameObject.GetComponent<Rigidbody>();
+        stationMark = GameObject.Find("stationMark").GetComponent<Transform>();
     }
 
     //using Observer & Subject allows the train to detect when it has left the screen without needing 
     //exact position data or calculations
     private void OnEnable()
     {
+        if(screenEnd == null) screenEnd = GameObject.Find("screenEnd").GetComponent<ScreenEndTrigger>();
+        Debug.Log("Enabled");
         screenEnd.AddObserver(this);
+        Debug.Log("Added");
+        // AddObserver(spawner);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         screenEnd.RemoveObserver(this);
+        Debug.Log("Removed");
+        // RemoveObserver(spawner);
+    }
+
+    private void SelfDestruct()
+    {
+        Debug.Log("Destroying");
+        Destroy(gameObject);
+    }
+
+    public void BecomeObserved()
+    {
+        Debug.Log("Becoming Observed");
+        if (screenEnd != null) screenEnd.AddObserver(this);
     }
 
     // Update is called once per frame
@@ -63,7 +83,7 @@ public class TrainMovement : MonoBehaviour, IObserver
             }
             else if (trainBody.drag == dragDefault)
             {
-                Debug.Log("Stopping");
+                // Debug.Log("Stopping");
                 isStopping = true;
             }
             trainBody.drag = trainBody.drag + (brakeSpeed * Time.deltaTime);
@@ -77,14 +97,18 @@ public class TrainMovement : MonoBehaviour, IObserver
 
     private void StartFromStop()
     {
-        Debug.Log("Starting");
+        // Debug.Log("Starting");
         trainBody.drag = dragDefault;
         trainBody.AddForce(gameObject.transform.forward * accelSpeed);  //"kick" the train out of stopping range so it starts moving on its own
     }
 
     public void OnNotify()
     {
-        gameObject.transform.position = new Vector3(screenStart.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        // Debug.Log("Notifed");
+        NotifyObservers();
+        // screenEnd.RemoveObserver(this);
+        SelfDestruct();
+        // gameObject.transform.position = new Vector3(screenStart.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
     }
 
     // void OnGUI()     //only for debugging values
